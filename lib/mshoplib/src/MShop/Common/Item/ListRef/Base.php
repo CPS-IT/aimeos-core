@@ -304,7 +304,7 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 			}
 
 			uasort( $items, array( $this, 'compareRefPosition' ) );
-			$this->refItems[$domain] = $item;
+			$this->refItems[$domain] = $items;
 		}
 
 		$this->sortedRefs = true;
