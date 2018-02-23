@@ -290,16 +290,21 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 				continue;
 			}
 
+			$items = [];
+
 			foreach( $list as $listItem )
 			{
 				$refId = $listItem->getRefId();
 
-				if( isset( $this->refItems[$domain][$refId] ) ) {
-					$this->refItems[$domain][$refId]->position = $listItem->getPosition();
+				if( isset( $this->refItems[$domain][$refId] ) )
+				{
+					$items[$refId] = $this->refItems[$domain][$refId];
+					$items[$refId]->position = $listItem->getPosition();
 				}
 			}
 
-			uasort( $this->refItems[$domain], array( $this, 'compareRefPosition' ) );
+			uasort( $items, array( $this, 'compareRefPosition' ) );
+			$this->refItems[$domain] = $item;
 		}
 
 		$this->sortedRefs = true;
