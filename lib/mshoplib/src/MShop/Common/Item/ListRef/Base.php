@@ -22,8 +22,8 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 {
 	private $refItems;
 	private $listItems;
-	private $sortedLists;
-	private $sortedRefs;
+	private $sortedRefs = false;
+	private $sortedLists = false;
 
 
 	/**
@@ -214,14 +214,6 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 	 */
 	protected function compareRefPosition( \Aimeos\MShop\Common\Item\Iface $a, \Aimeos\MShop\Common\Item\Iface $b )
 	{
-		if( !isset( $a->position ) ) {
-			return 1;
-		}
-
-		if( !isset( $b->position ) ) {
-			return -1;
-		}
-
 		if( $a->position === $b->position ) {
 			return 0;
 		}
@@ -261,7 +253,7 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 	 */
 	protected function sortListItems()
 	{
-		if( isset( $this->sortedLists ) ) {
+		if( $this->sortedLists === true ) {
 			return;
 		}
 
@@ -288,7 +280,7 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 	 */
 	protected function sortRefItems()
 	{
-		if( isset( $this->sortedRefs ) ) {
+		if( $this->sortedRefs === true ) {
 			return;
 		}
 
@@ -298,19 +290,16 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 				continue;
 			}
 
-			$items = $this->refItems[$domain];
-
 			foreach( $list as $listItem )
 			{
 				$refId = $listItem->getRefId();
 
-				if( isset( $items[$refId] ) ) {
-					$items[$refId]->position = $listItem->getPosition();
+				if( isset( $this->refItems[$domain][$refId] ) ) {
+					$this->refItems[$domain][$refId]->position = $listItem->getPosition();
 				}
 			}
 
-			uasort( $items, array( $this, 'compareRefPosition' ) );
-			$this->refItems[$domain] = $items;
+			uasort( $this->refItems[$domain], array( $this, 'compareRefPosition' ) );
 		}
 
 		$this->sortedRefs = true;
