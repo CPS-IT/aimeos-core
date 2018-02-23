@@ -214,6 +214,14 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 	 */
 	protected function compareRefPosition( \Aimeos\MShop\Common\Item\Iface $a, \Aimeos\MShop\Common\Item\Iface $b )
 	{
+		if( !isset( $a->position ) ) {
+			return 1;
+		}
+
+		if( !isset( $b->position ) ) {
+			return -1;
+		}
+
 		if( $a->position === $b->position ) {
 			return 0;
 		}
@@ -290,15 +298,13 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 				continue;
 			}
 
-			$items = [];
+			$items = $this->refItems[$domain];
 
 			foreach( $list as $listItem )
 			{
 				$refId = $listItem->getRefId();
 
-				if( isset( $this->refItems[$domain][$refId] ) )
-				{
-					$items[$refId] = $this->refItems[$domain][$refId];
+				if( isset( $items[$refId] ) ) {
 					$items[$refId]->position = $listItem->getPosition();
 				}
 			}
