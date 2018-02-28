@@ -122,10 +122,11 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 	public function getRefItems( $domain = null, $type = null, $listtype = null, $active = true )
 	{
 		$list = [];
-		$this->sortRefItems();
 
 		if( is_array( $domain ) || $domain === null )
 		{
+			$this->sortRefItems();
+
 			foreach( $this->refItems as $domain => $items ) {
 				$list[$domain] = $this->filterItems( $items, $active );
 			}
