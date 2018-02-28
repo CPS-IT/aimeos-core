@@ -19,15 +19,7 @@
 
 
 	<target name="coverage" description="Creates coverage reports">
-		<phing target="coverage" haltonfailure="true" dir="${coredir}/lib/mwlib" />
 		<phing target="coverage" haltonfailure="true" dir="${coredir}/lib/mshoplib" />
-		<phing target="coverage" haltonfailure="true" dir="${coredir}/controller/common" />
-		<phing target="coverage" haltonfailure="true" dir="${coredir}/controller/jobs" />
-		<phing target="coverage" haltonfailure="true">
-			<fileset dir="${extdir}" expandsymboliclinks="true" >
-				<include name="*/phing.xml" />
-			</fileset>
-		</phing>
 	</target>
 
 	<target name="coverageext" description="Creates coverage report for specific extension directory">

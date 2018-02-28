@@ -3,10 +3,7 @@
 <phpunit bootstrap="bootstrap.php">
 	<testsuites>
 		<testsuite name="Aimeos suite">
-			<directory>MShop/</directory>
-		</testsuite>
-		<testsuite name="MAdmin suite">
-			<directory>MAdmin/</directory>
+			<directory>MShop/Index/Manager/Price</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

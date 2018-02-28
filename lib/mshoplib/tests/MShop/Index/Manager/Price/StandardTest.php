@@ -45,7 +45,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		unset( $this->object );
 	}
 
-
+/*
 	public function testCleanup()
 	{
 		$this->object->cleanup( array( -1 ) );
@@ -137,7 +137,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
-
+*/
 
 	public function testSearchItems()
 	{
@@ -150,24 +150,13 @@ print_r( $priceItems );
 			throw new \RuntimeException( 'No price with type "default" available in product CNC' );
 		}
 
-		$context = \TestHelperMShop::getContext();
-		$dbm = $context->getDatabaseManager();
-		$conn = $dbm->acquire();
-
-		echo 'price ID: ' . $priceItem->getId() . PHP_EOL;
-		echo 'price rows: ' . PHP_EOL;
-		$result = $conn->create( 'SELECT * FROM mshop_index_price' )->execute();
-		while( ( $row = $result->fetch() ) !== false ) {
-			print_r( $row );
-		}
-
 		$search->setConditions( $search->compare( '==', 'index.price.id', $priceItem->getId() ) );
 		$result = $this->object->searchItems( $search, [] );
 
 		$this->assertEquals( 2, count( $result ) );
 	}
 
-
+/*
 	public function testSearchItemsIdNull()
 	{
 		$search = $this->object->createSearch();
@@ -278,5 +267,5 @@ print_r( $priceItems );
 	{
 		$this->object->cleanupIndex( '1970-01-01 00:00:00' );
 	}
-
+*/
 }
