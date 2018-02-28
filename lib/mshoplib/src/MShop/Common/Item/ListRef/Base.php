@@ -287,6 +287,11 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 			}
 
 			$this->refItems[$domain] = $sorted;
+
+			if( $domain === 'price' ) {
+				echo 'sorted: ' . PHP_EOL;
+				print_r( $this->refItems[$domain] );
+			}
 		}
 
 		$this->sortedRefs = true;

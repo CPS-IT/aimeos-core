@@ -144,8 +144,10 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		$search = $this->object->createSearch();
 
 		$priceItems = self::$products['CNC']->getRefItems( 'price', 'default' );
-print_r( self::$products['CNC']->getListItems( 'price' ) );
-print_r( $priceItems );
+
+		print_r( self::$products['CNC']->getListItems( 'price' ) );
+		print_r( $priceItems );
+
 		if( ( $priceItem = reset( $priceItems ) ) === false ) {
 			throw new \RuntimeException( 'No price with type "default" available in product CNC' );
 		}
