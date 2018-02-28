@@ -148,6 +148,17 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 			throw new \RuntimeException( 'No price with type "default" available in product CNC' );
 		}
 
+		$context = \TestHelperMShop::getContext();
+		$dbm = $context->getDatabaseManager();
+		$conn = $dbm->acquire();
+
+		echo 'price ID: ' . $priceItem->getId() . PHP_EOL;
+		echo 'price rows: ' . PHP_EOL;
+		$result = $conn->create( 'SELECT * FROM mshop_index_price' )->execute();
+		while( ( $row = $result->fetch() ) !== false ) {
+			print_r( $row );
+		}
+
 		$search->setConditions( $search->compare( '==', 'index.price.id', $priceItem->getId() ) );
 		$result = $this->object->searchItems( $search, [] );
 
