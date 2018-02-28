@@ -45,7 +45,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		unset( $this->object );
 	}
 
-/*
+	/*
 	public function testCleanup()
 	{
 		$this->object->cleanup( array( -1 ) );
@@ -137,7 +137,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
-*/
+	*/
 
 	public function testSearchItems()
 	{
@@ -158,7 +158,7 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		$this->assertEquals( 2, count( $result ) );
 	}
 
-/*
+	/*
 	public function testSearchItemsIdNull()
 	{
 		$search = $this->object->createSearch();
@@ -269,5 +269,5 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 	{
 		$this->object->cleanupIndex( '1970-01-01 00:00:00' );
 	}
-*/
+	*/
 }

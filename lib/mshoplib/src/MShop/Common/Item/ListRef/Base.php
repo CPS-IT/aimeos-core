@@ -137,19 +137,9 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 			return [];
 		}
 
-		$iface = '\\Aimeos\\MShop\\Common\\Item\\Lists\\Iface';
-		$types = ( is_array( $type ) ? $type : array( $type ) );
-		$listtypes = ( is_array( $listtype ) ? $listtype : array( $listtype ) );
-
-		foreach( $this->listItems[$domain] as $listItem )
+		foreach( $this->getListItems( $domain, $listtype, $type, $active ) as $listItem )
 		{
-			$refId = $listItem->getRefId();
-
-			if( isset( $this->refItems[$domain][$refId] ) && $listItem instanceof $iface
-				&& ( $type === null || in_array( $this->refItems[$domain][$refId]->getType(), $types ) )
-				&& ( $listtype === null || in_array( $listItem->getType(), $listtypes ) )
-				&& ( $active === false || $listItem->isAvailable() )
-			) {
+			if( ( $refItem = $listItem->getRefItem() !== null ) && ( $active === false || $refItem->isAvailable() ) ) {
 				$list[$refId] = $this->refItems[$domain][$refId];
 			}
 		}
