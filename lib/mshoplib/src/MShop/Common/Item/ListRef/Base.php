@@ -140,7 +140,7 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 		foreach( $this->getListItems( $domain, $listtype, $type, $active ) as $listItem )
 		{
 			if( ( $refItem = $listItem->getRefItem() ) !== null && ( $active === false || $refItem->isAvailable() ) ) {
-				$list[$refId] = $this->refItems[$domain][$refId];
+				$list[$listItem->getRefId()] = $refItem;
 			}
 		}
 
