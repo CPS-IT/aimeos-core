@@ -40,7 +40,6 @@ class StandardTest extends \PHPUnit\Framework\TestCase
 		foreach( $result as $item )
 		{
 			self::$products[$item->getCode()] = $item;
-print_r( $item->getRefItems( 'price' ) );
 			$manager->saveItem( $item );
 		}
 	}
