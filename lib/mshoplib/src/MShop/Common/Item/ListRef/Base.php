@@ -206,23 +206,6 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 
 
 	/**
-	 * Compares the positions of two referenced items for sorting.
-	 *
-	 * @param \Aimeos\MShop\Common\Item\Iface $a First referenced item
-	 * @param \Aimeos\MShop\Common\Item\Iface $b Second referenced item
-	 * @return integer -1 if position of $a < $b, 1 if position of $a > $b and 0 if both positions are equal
-	 */
-	protected function compareRefPosition( \Aimeos\MShop\Common\Item\Iface $a, \Aimeos\MShop\Common\Item\Iface $b )
-	{
-		if( $a->position === $b->position ) {
-			return 0;
-		}
-
-		return ( $a->position < $b->position ) ? -1 : 1;
-	}
-
-
-	/**
 	 * Returns only active items
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Lists\Iface[] $list Associative list of items with ID as key and objects as value
@@ -286,20 +269,24 @@ abstract class Base extends \Aimeos\MShop\Common\Item\Base
 
 		foreach( $this->listItems as $domain => $list )
 		{
-			if( !isset( $this->refItems[$domain] ) ) {
-				continue;
+			$sorted = [];
+
+			foreach( $list as $listItem ) {
+				$sorted[$listItem->getRefId()] = $listItem->getPosition();
 			}
 
-			foreach( $list as $listItem )
-			{
-				$refId = $listItem->getRefId();
+			asort( $sorted );
 
+			foreach( $sorted as $refId => $pos )
+			{
 				if( isset( $this->refItems[$domain][$refId] ) ) {
-					$this->refItems[$domain][$refId]->position = $listItem->getPosition();
+					$sorted[$refId] = $this->refItems[$domain][$refId];
+				} else {
+					unset( $sorted[$refId] );
 				}
 			}
 
-			uasort( $this->refItems[$domain], array( $this, 'compareRefPosition' ) );
+			$this->refItems[$domain] = $sorted;
 		}
 
 		$this->sortedRefs = true;
